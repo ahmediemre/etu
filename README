@@ -1,0 +1,33 @@
+TOBB Ekonomi ve Teknoloji Universitesi veritabanindaki
+herkese acik bilgilere erisim saglayan python modulu
+
+Bu erisimi saglarken oim.etu.edu.tr altindaki sayfalari
+okur ve gerekli bilgileri toplar.
+
+Gereksinimler:
+--------------
+* Python 2.7
+* BeautifulSoup
+
+Uygulamalar:
+------------
+
+1. Arasınav Takvimi Oluşturucu (arasinav.py):
+---------------------------------------------
+Öğrencinin aldığı derslerin ara sınav programı takvimini iCalendar formatında
+oluşturan program.
+
+	Gereksinimler:
+		* iCalendar
+
+	Kullanım: arasinav.py öğrenci_no [-o output_file]
+
+Not: Google Calendar desteği eklenebilir.
+
+2. Ortalama Bulucu(?) (notortalamasi.py):
+------------------------------
+Öğrenci numaraları verilen öğrencilerin not ortalamalarını getirir.
+
+3. Ders Programı Oluşturucu:
+----------------------------
+YAPILACAK
