@@ -28,8 +28,9 @@ Not: Google Calendar desteği eklenebilir.
 ------------------------------
 Öğrenci numaraları verilen öğrencilerin not ortalamalarını getirir.
 
-	Kullanım: notortalamasi.py input_file
-	input_file: her satıra bir tane öğrenci numarası içerir.
+	Kullanım: notortalamasi.py lisf_of_stid -f input_file
+	list_of_stid: öğrenci numaraları listesi
+	input_file: her satıra bir tane öğrenci numarası içerir. (öncelikli)
 
 3. Ders Programı Oluşturucu:
 ----------------------------

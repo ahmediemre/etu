@@ -59,18 +59,29 @@ def parse_db(dbfile="db"):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ogrenci numaralarina gore ortalama sirali liste getirir.")
-    parser.add_argument('inputfile', help='input file: her satirda 1 ogrenci numarasi icermeli')
+    parser.add_argument('-f', help='input file: her satirda 1 ogrenci numarasi icermeli', default=None)
+    parser.add_argument('stid', help='Ogrenci numarasi listesi, eger input file varsa oncelik file\'indir.', nargs='*')
     args = parser.parse_args(sys.argv[1:])
+
+    if len(args.stid) == 0 and not args.f:
+        parser.print_usage()
+        exit
 
     db = parse_db()
     liste = []
-    f = codecs.open(args.inputfile, "r")
+    if not args.f:
+        f = args.stid
+    else:
+        infile = codecs.open(args.f, "r")
+        f = [line.strip() for line in infile.readlines()]
+        infile.close()
 
     for line in f:
-        liste.append(Ogrenci(db[line.strip()]))
+        try:
+            liste.append(Ogrenci(db[line]))
+        except KeyError:
+            print "(Key error) Ogrenci Numarasi bulunamadi %s" % line
     
-    f.close()
-
     liste.sort(reverse=True)
     for entry in liste:
         print unicode(entry)
