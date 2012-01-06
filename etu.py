@@ -23,7 +23,7 @@ def arasinav(filter_func=(lambda data: True)):
     """Arasinavlari dict listi olarak doner
     Opsiyonel olarak filtreleme yapmasi icin bir fonksiyon alir."""
     url = urlopen("http://oim.etu.edu.tr/tr/content/ara-sinav-programi")
-    soup = BeautifulSoup(url.read())
+    soup = BeautifulSoup(url.read().decode("utf-8"))
 
     examlist = []
     table = soup.find("table")
@@ -32,11 +32,11 @@ def arasinav(filter_func=(lambda data: True)):
         cols = tr.findAll("td")
         row = {}
 
-        row["kod"] = unicode(cols[0].text)
-        row["ad"] = unicode(cols[1].text)
+        row["kod"] = cols[0].text
+        row["ad"] = cols[1].text
         row["sube"] = int(cols[2].text)
-        row["derslik"] = unicode(cols[4].text)
-        row["tarih"] = unicode(cols[5].text)
+        row["derslik"] = cols[4].text
+        row["tarih"] = cols[5].text
         row["saat"] = _parse_saat(cols[7].text)
         
         if filter_func(row):
@@ -48,7 +48,7 @@ def arasinav(filter_func=(lambda data: True)):
 def acik_dersler():
     "Icinde bulunulan donem acilmis dersler dict[ders_kodu] = (ad, value) seklinde dictionary'si"
     url = urlopen("http://kayit.etu.edu.tr/Ders/_Ders_prg_start.php")
-    soup = BeautifulSoup(url.read())
+    soup = BeautifulSoup(url.read().decode("iso8859-9")) #site iso8859-9 kodlamasida
 
     parser_kod = lambda string: string[:8].rstrip()
     parser_ad = lambda string: string[8:].strip()
@@ -65,7 +65,7 @@ def acik_dersler():
 def kayitli_dersler(student_id):
     "Ogrencinin o donem kayitli oldugu derslerin(ders_kodu, sube) ikilisi olarak seti"
     form = { 'ogrencino': student_id, 'btn_ogrenci': True }
-    soup = BeautifulSoup(_post("http://kayit.etu.edu.tr/Ders/Ders_prg.php", form))
+    soup = BeautifulSoup(_post("http://kayit.etu.edu.tr/Ders/Ders_prg.php", form).decode("iso8859-9"))
 
     classset = set()
     table = soup.find("table")
@@ -92,7 +92,7 @@ def ders_sube_list(ders_kodu):
     "Secili dersin (sube_no, hoca) ikilisi listesini doner"
     ders = acik_dersler()[ders_kodu] #ders = (ad, value)
     form = { 'dd_ders': ders[1], 'sube': 0, 'btn_ders': True} 
-    soup = BeautifulSoup(_post("http://kayit.etu.edu.tr/Ders/Ders_prg.php", form))
+    soup = BeautifulSoup(_post("http://kayit.etu.edu.tr/Ders/Ders_prg.php", form).decode("iso8859-9"))
 
     sectionlist = []
     tables = soup.findAll("table")
