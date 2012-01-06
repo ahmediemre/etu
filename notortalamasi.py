@@ -33,7 +33,8 @@ class Ogrenci:
         return float(data.replace(u',', u'.'))
 
     def __repr__(self):
-        return u"%s %s: %.2f" % (self.data["adi"], self.data["soyadi"], self.data["ort"])
+        string = u"%s %s: %.2f" % (self.data["adi"], self.data["soyadi"], self.data["ort"])
+        return string.encode("utf-8")
 
     def __getitem__(self, key):
         return self.data[key]
@@ -46,7 +47,7 @@ class Ogrenci:
         
 
 def parse_db(dbfile="db"):
-    f = codecs.open(dbfile, "r")
+    f = codecs.open(dbfile, "r", "utf-8")
     dbdict = {}
     for line in f:
         data = line.split(";")
@@ -84,4 +85,4 @@ if __name__ == "__main__":
     
     liste.sort(reverse=True)
     for entry in liste:
-        print unicode(entry)
+        print entry
